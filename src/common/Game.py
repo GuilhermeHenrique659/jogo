@@ -23,10 +23,15 @@ class Game(ABC):
         super().__init__()
 
     @abstractmethod
+    def setup(self):
+        pass
+
+    @abstractmethod
     def main(self):
         pass
 
     def render(self):
+        self.setup()
         while self.loop:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
