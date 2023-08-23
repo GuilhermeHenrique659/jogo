@@ -7,16 +7,14 @@ from pygame import Surface
 from common.Game import Game
 
 class Entity(ABC):
-    x: int
-    y: int
     weight: int
     height: int
     entity: Rect
     display: Surface
-    __game: Game
+    _game: Game
 
     def __init__(self, game: Game) -> None:
-        self.__game = game
+        self._game = game
         self.entity = self.setup()
 
     @abstractmethod
@@ -24,12 +22,11 @@ class Entity(ABC):
         pass
 
     @abstractmethod
-    def loop(self, keys: ScancodeWrapper):
+    def loop(self, keys: ScancodeWrapper, *args):
         pass
 
-    def render(self):
+    def render(self, *args):
         keys = pygame.key.get_pressed()
-        self.loop(keys)
-        pygame.draw.rect(self.__game.display, 'red', self.entity)
-
+        self.loop(keys, *args)
+        pygame.draw.rect(self._game.display, 'white', self.entity)
  
