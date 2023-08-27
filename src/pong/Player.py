@@ -1,15 +1,17 @@
 
+import os
 import pygame
 from pygame import Rect
 from pygame.key import ScancodeWrapper
 from common.Entity import Entity
+from common.sprite import Sprite
 
 
 class Player(Entity):
     def setup(self) -> Rect:
         self.player_vel = 0
-        player = pygame.Rect(0, 0, 30, 150)
-        return player
+        self.sprite = Sprite(['assets/player1.png'])
+        return self.sprite.get_rect()
     
     def loop(self, keys: ScancodeWrapper):
         if keys[pygame.K_s]:
