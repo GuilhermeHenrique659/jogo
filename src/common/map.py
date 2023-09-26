@@ -20,7 +20,6 @@ class Map(ABC):
         for tile in self.collision_tiles.values():
             gid = self.get_gid_by_tile(tile)
             self.collision_gid.append(gid)
-        print(self.collision_gid)
 
     def render(self):
         for layer in self.map.visible_layers:
@@ -37,4 +36,10 @@ class Map(ABC):
         for key, value in self.map.tiledgidmap.items():
             if value == tile:
                 return key
+                
+    def collision_map_with_entity(self, entity: Entity):
+        for rect in self.collision_rect:
+            if entity.entity.colliderect(rect):
+                entity.x = 100
+                entity.y = 100
         

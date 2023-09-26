@@ -30,7 +30,7 @@ class Bar(Game):
     
     def setup(self):
         self.fps = 60
-        self.player = Teste(0, 0, use_limit=True, gravity_force=0.5)
+        self.player = Teste(0, 0, use_limit=True)
         self.map = Map('assets/map.tmx', { 'tile': 81 })
 
     def main(self):
