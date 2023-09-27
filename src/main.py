@@ -14,13 +14,19 @@ class Teste(Entity):
 
     def loop(self, keys: ScancodeWrapper):
         if (keys[pygame.K_d]):
-            self.x += 5
+            self.velocity.x = 3
             self.current_sprite = self.walk
         elif keys[pygame.K_a]:
-            self.x -= 5
+            self.velocity.x = -3
             self.current_sprite = self.walk
+        elif keys[pygame.K_w]:
+            self.velocity.y = -3
+        elif keys[pygame.K_s]:
+            self.velocity.y = 3
 
         else:
+            self.velocity.x = 0
+            self.velocity.y = 0
             self.current_sprite = self.idle
 
 
@@ -30,8 +36,8 @@ class Bar(Game):
     
     def setup(self):
         self.fps = 60
-        self.player = Teste(0, 0, use_limit=True)
-        self.map = Map('assets/map.tmx', { 'tile': 81 })
+        self.player = Teste(150, 150, use_limit=True)
+        self.map = Map('assets/map.tmx', { 'tile': 1 })
 
     def main(self):
         self.display.fill("purple")
