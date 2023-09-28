@@ -1,8 +1,6 @@
-from ast import List
 from bomber.icons.bombIcon import BombIcon
 from bomber.maps.base_map import BaseMap
 from bomber.player.bomberMan import BomberMan
-from common.Entity import Entity
 from common.Game import Game
 from common.config import Config
 
@@ -17,6 +15,7 @@ class Bomber(Game):
         self.player1 = BomberMan(150, 150, player_type=1)
         self.player2 = BomberMan(800, 600, player_type=2)
         self.map = BaseMap('assets/map.tmx', { 'wall_l': 2684354561, 'wall_t': 3221225473, 'wall_b': 1, 'wall_r': 1610612737, })
+        self.map.generate_destruction_blocks(self.player1, self.player2)
 
     def set_player2_bomb_icons(self, num_bombs: int):
         if len(self.bomb_icons_player_2) > 3: return
@@ -48,6 +47,7 @@ class Bomber(Game):
         self.render_bomb_icons()
         self.player1.collision_entity([self.player2, *self.player1.entities, *self.player2.entities])
         self.player2.collision_entity([self.player1, *self.player1.entities, *self.player2.entities])
+        self.map.render_destruction_blocks()
         self.map.collision_map_with_entity(self.player1)
         self.map.collision_map_with_entity(self.player2)
 

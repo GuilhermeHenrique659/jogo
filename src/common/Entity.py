@@ -12,7 +12,7 @@ class Entity(ABC):
     width: int
     height: int
     color: str | None = None
-    rect: Rect
+    rect: Rect | None = None
     display: Surface
     current_sprite: Sprite | None
 
@@ -25,10 +25,10 @@ class Entity(ABC):
         self.gravity_force = gravity_force
         self.use_limit = use_limit
         self.setup()
+        self.init()
         self.velocity = pygame.Vector2()
         self.display = pygame.display.get_surface()
         self.is_alive = True
-        self.init()
         self.entities = []
 
     def init(self):
@@ -62,8 +62,8 @@ class Entity(ABC):
 
     def get_current_tile(self) -> Tuple[int, int]:
         tile_size = Config.tile_size()
-        tile_x = self.rect.x // tile_size
-        tile_y = self.rect.y // tile_size
+        tile_x = (self.rect.x if self.rect else self._x) // tile_size
+        tile_y = (self.rect.y if self.rect else self._y) // tile_size
         return (tile_x * tile_size), (tile_y * tile_size)
 
     def kill(self):
@@ -117,5 +117,3 @@ class Entity(ABC):
                 self.display.blit(sprite_first_img, self.rect)
         else:
             pygame.draw.rect(self.display, self.color if self.color else 'white', self.rect)
-
- 

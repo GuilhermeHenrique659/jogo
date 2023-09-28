@@ -1,5 +1,4 @@
-from abc import ABC
-from time import sleep
+from abc import ABC, abstractmethod
 import pygame
 import pytmx
 from common.Entity import Entity
@@ -41,23 +40,32 @@ class Map(ABC):
                  gids.append(key)
         return gids
                 
+    @abstractmethod
+    def custom_collsion(self):
+        pass
+
     def collision_map_with_entity(self, entity: Entity):
+        self.custom_collsion()
         for rect in self.collision_rect:
             if entity.rect.colliderect(rect):
-                overlap_x = min(entity.rect.right, rect.right) - max(entity.rect.left, rect.left)
-                overlap_y = min(entity.rect.bottom, rect.bottom) - max(entity.rect.top, rect.top)
+                self.collision_math(entity, rect)
+                
 
-                if overlap_x < overlap_y:
-                    if entity.rect.left < rect.left and entity.velocity.x > 0:
-                        entity.rect.right = rect.left
-                    elif entity.rect.right > rect.right and entity.velocity.x < 0:
-                        entity.rect.left = rect.right
-                    entity.velocity.x = 0
-                else:
-                    if entity.rect.top < rect.top and entity.velocity.y > 0:
-                        entity.rect.bottom = rect.top
-                    elif entity.rect.bottom > rect.bottom and entity.velocity.y < 0:
-                        entity.rect.top = rect.bottom
-                    entity.velocity.y = 0
+    def collision_math(self, entity, rect):
+        overlap_x = min(entity.rect.right, rect.right) - max(entity.rect.left, rect.left)
+        overlap_y = min(entity.rect.bottom, rect.bottom) - max(entity.rect.top, rect.top)
+
+        if overlap_x < overlap_y:
+            if entity.rect.left < rect.left and entity.velocity.x > 0:
+                entity.rect.right = rect.left
+            elif entity.rect.right > rect.right and entity.velocity.x < 0:
+                entity.rect.left = rect.right
+            entity.velocity.x = 0
+        else:
+            if entity.rect.top < rect.top and entity.velocity.y > 0:
+                entity.rect.bottom = rect.top
+            elif entity.rect.bottom > rect.bottom and entity.velocity.y < 0:
+                entity.rect.top = rect.bottom
+            entity.velocity.y = 0
 
     

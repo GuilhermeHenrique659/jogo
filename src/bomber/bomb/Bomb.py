@@ -2,6 +2,7 @@ import threading
 import time
 
 from pygame.key import ScancodeWrapper
+from bomber.observer.bomb.observer import observer
 from common.Entity import Entity
 from common.sprite import Sprite
 
@@ -19,9 +20,11 @@ class Bomb(Entity):
 
         
     def explode(self):
+        observer.notify(self)
         self.kill()
         
     def loop(self, keys: ScancodeWrapper):
         current_time = time.time()
         if current_time - self.start_time >= 3:
             self.explode()
+        
