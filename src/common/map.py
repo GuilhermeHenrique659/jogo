@@ -44,16 +44,20 @@ class Map(ABC):
     def collision_map_with_entity(self, entity: Entity):
         for rect in self.collision_rect:
             if entity.rect.colliderect(rect):
-                if entity.rect.left < rect.right and entity.velocity.x > 0:
-                    entity.rect.right = rect.left
-                elif entity.rect.right > rect.left and entity.velocity.x < 0:
-                    entity.rect.left = rect.right
+                overlap_x = min(entity.rect.right, rect.right) - max(entity.rect.left, rect.left)
+                overlap_y = min(entity.rect.bottom, rect.bottom) - max(entity.rect.top, rect.top)
 
-                if entity.rect.top < rect.bottom and entity.velocity.y > 0:
-                    entity.rect.bottom = rect.top
-                elif entity.rect.bottom > rect.top and entity.velocity.y < 0:
-                    entity.rect.top = rect.bottom
-                entity.velocity.x = 0
-                entity.velocity.y = 0
+                if overlap_x < overlap_y:
+                    if entity.rect.left < rect.left and entity.velocity.x > 0:
+                        entity.rect.right = rect.left
+                    elif entity.rect.right > rect.right and entity.velocity.x < 0:
+                        entity.rect.left = rect.right
+                    entity.velocity.x = 0
+                else:
+                    if entity.rect.top < rect.top and entity.velocity.y > 0:
+                        entity.rect.bottom = rect.top
+                    elif entity.rect.bottom > rect.bottom and entity.velocity.y < 0:
+                        entity.rect.top = rect.bottom
+                    entity.velocity.y = 0
 
     

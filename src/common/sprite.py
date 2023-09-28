@@ -13,6 +13,7 @@ class Sprite:
         self.tick = tick
         self.current_index = 0
         self.last_update_time = 0
+        self.is_fliped = False
 
     def init(self, imgs: List[str]):
         for img in imgs:
@@ -21,9 +22,16 @@ class Sprite:
             self.sprites_rect.append(sprite_rect)
             self.sprites_imgs.append(sprite_img)
     
+    def flip(self, flip_x = False, flip_y = False):
+        images_fliped = []
+        for image in self.sprites_imgs:
+            image = pygame.transform.flip(image, flip_x, flip_y)
+            images_fliped.append(image)
+        self.sprites_imgs = images_fliped
+        self.is_fliped = not self.is_fliped
+
     def animation(self) -> pygame.Surface:
         current_time = pygame.time.get_ticks()
-
         if current_time - self.last_update_time >= self.tick:
             self.last_update_time = current_time
             self.current_index = (self.current_index + 1) % len(self.sprites_imgs)

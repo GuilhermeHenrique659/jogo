@@ -6,6 +6,7 @@ from pygame import Surface
 from common.Game import Game
 from common.config import Config
 from common.sprite import Sprite
+from typing import Tuple
 
 class Entity(ABC):
     width: int
@@ -26,7 +27,9 @@ class Entity(ABC):
         self.setup()
         self.velocity = pygame.Vector2()
         self.display = pygame.display.get_surface()
+        self.is_alive = True
         self.init()
+        self.entities = []
 
     def init(self):
         if self.current_sprite:
@@ -37,6 +40,34 @@ class Entity(ABC):
         else:
             self.rect = pygame.Rect(self._x, self._y, self.width, self.height)
 
+    def collision_entity(self, orther_entity):
+        for entity in orther_entity:
+            if not entity or not entity.is_alive: continue
+            rect = entity.rect
+            if self.rect.colliderect(rect):
+                overlap_x = min(self.rect.right, rect.right) - max(self.rect.left, rect.left)
+                overlap_y = min(self.rect.bottom, rect.bottom) - max(self.rect.top, rect.top)
+                if overlap_x < overlap_y:
+                    if self.rect.left < rect.left and self.velocity.x > 0:
+                        self.rect.right = rect.left
+                    elif self.rect.right > rect.right and self.velocity.x < 0:
+                        self.rect.left = rect.right
+                    self.velocity.x = 0
+                else:
+                    if self.rect.top < rect.top and self.velocity.y > 0:
+                        self.rect.bottom = rect.top
+                    elif self.rect.bottom > rect.bottom and self.velocity.y < 0:
+                        self.rect.top = rect.bottom
+                    self.velocity.y = 0
+
+    def get_current_tile(self) -> Tuple[int, int]:
+        tile_size = Config.tile_size()
+        tile_x = self.rect.x // tile_size
+        tile_y = self.rect.y // tile_size
+        return (tile_x * tile_size), (tile_y * tile_size)
+
+    def kill(self):
+        self.is_alive = False
 
     def gravity(self):
         if not self.gravity_force: return
@@ -64,6 +95,14 @@ class Entity(ABC):
         self.rect.y += self.velocity.y
 
     def render(self, *args):
+        if not self.is_alive: return
+
+        for entity in self.entities:
+            if not entity.is_alive: 
+                del entity 
+                continue
+            if entity: entity.render()
+
         keys = pygame.key.get_pressed()
         self.gravity()
         self.loop(keys, *args)
