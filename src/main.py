@@ -1,5 +1,6 @@
 import pygame
 from pygame.key import ScancodeWrapper
+from bomber.maps.base_map import BaseMap
 from common.Entity import Entity
 from common.Game import Game
 from common.config import Config
@@ -37,7 +38,7 @@ class Bar(Game):
     def setup(self):
         self.fps = 60
         self.player = Teste(150, 150, use_limit=True)
-        self.map = Map('assets/map.tmx', { 'tile': 1 })
+        self.map = BaseMap('assets/map.tmx', { 'wall_l': 2684354561, 'wall_t': 3221225473, 'wall_b': 1, 'wall_r': 1610612737, })
 
     def main(self):
         self.display.fill("purple")
