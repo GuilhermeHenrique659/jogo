@@ -1,61 +1,36 @@
-from bomber.icons.bombIcon import BombIcon
-from bomber.maps.base_map import BaseMap
-from bomber.player.bomberMan import BomberMan
+import pygame
+from bomber.screen.gameOverScreen import GameOverScreen
+from bomber.screen.gameScreen import GameScreen
+from bomber.screen.menuScreen import MenuScreen
 from common.Game import Game
 from common.config import Config
 
 class Bomber(Game):
     def __init__(self, name: str, width: int, height: int, tile_size = None,  debug_mode = None):
-        self.bomb_icons_player_1 = []
-        self.bomb_icons_player_2 = []
         super().__init__(name, width, height, tile_size, debug_mode)
     
     def setup(self):
         self.fps = 60
-        self.player1 = BomberMan(150, 150, player_type=1)
-        self.player2 = BomberMan(800, 600, player_type=2)
-        self.map = BaseMap('assets/map.tmx', { 'wall_l': 2684354561, 'wall_t': 3221225473, 'wall_b': 1, 'wall_r': 1610612737, })
-        self.map.generate_destruction_blocks(self.player1, self.player2)
-
-    def set_player2_bomb_icons(self, num_bombs: int):
-        if len(self.bomb_icons_player_2) > 3: return
-    
-        self.bomb_icons_player_2 = []
-        for i in range(num_bombs):
-            self.bomb_icons_player_2.append(BombIcon(1000 + i * 48, 10))
-
-    def set_player1_bomb_icons(self, num_bombs: int):
-        if len(self.bomb_icons_player_1) > 3: return
-        self.bomb_icons_player_1 = []
-        for i in range(num_bombs):
-            self.bomb_icons_player_1.append(BombIcon(32 + i * 48, 10))
+        self.game = GameScreen()
+        self.gameOver = GameOverScreen()
+        self.current_screen = MenuScreen()
 
     def game_over(self):
-        if self.player1.is_alive and self.player2.is_alive: return
-
-        print('fim do jogo')
-        self.loop = False
-            
-    def render_bomb_icons(self):
-        for icon in self.bomb_icons_player_1:
-            icon.render()
-        for icon in self.bomb_icons_player_2:
-            icon.render()
+        if self.game.player1.is_alive and self.game.player2.is_alive: return
+        
+        self.game.reset()
+        self.current_screen = self.gameOver
 
     def main(self):
         self.display.fill("purple")
-        self.map.render()
-        self.map.render_destruction_blocks()
-        self.set_player1_bomb_icons(self.player1.num_bomb)
-        self.player1.render()
-        self.player2.render()
-        self.set_player2_bomb_icons(self.player2.num_bomb)
-        self.render_bomb_icons()
-        self.player1.collision_entity([self.player2, *self.player1.entities, *self.player2.entities])
-        self.player2.collision_entity([self.player1, *self.player1.entities, *self.player2.entities])
-        self.map.collision_map_with_entity(self.player1)
-        self.map.collision_map_with_entity(self.player2)
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            self.current_screen = self.game
+        elif keys[pygame.K_ESCAPE]:
+            self.loop = False
         self.game_over()
+        self.current_screen.render()
+
 
 WIDTH, HEIGHT = Config.display_size()
 Bomber = Bomber('Arabe simulator', WIDTH, HEIGHT, Config.tile_size(), True)

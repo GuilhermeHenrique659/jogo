@@ -18,5 +18,5 @@ class PlayerSubject:
         bomb_tile_y = bomb_y // tile_size
 
         if (abs(bomb_tile_x - block_tile_x) <= 1 and bomb_tile_y == block_tile_y) or \
-            (abs(bomb_tile_y - block_tile_y) <= 1 and bomb_tile_x == block_tile_x):            
+            (abs(bomb_tile_y - block_tile_y) <= 1 and bomb_tile_x == block_tile_x):
                 self.player.bomb_hit()

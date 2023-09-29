@@ -33,8 +33,7 @@ class Game(ABC):
         pass
 
     def render(self):
-        pygame.font.init() 
-        pygame.mixer.init()
+
         self.setup()
         while self.loop:
             for event in pygame.event.get():
@@ -55,7 +54,8 @@ class Game(ABC):
 
     def __init(self):
         pygame.init()
-        pygame.font.init()
+        pygame.font.init() 
+        pygame.mixer.init()
         self.clock = pygame.time.Clock()
     
     def __init_diplay(self):

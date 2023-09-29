@@ -1,4 +1,7 @@
 
+import pygame
+
+
 class Config:
     @staticmethod
     def display_size():
@@ -7,3 +10,7 @@ class Config:
     @staticmethod
     def tile_size():
         return 48
+    
+    @staticmethod
+    def font():
+        return pygame.font.get_default_font()

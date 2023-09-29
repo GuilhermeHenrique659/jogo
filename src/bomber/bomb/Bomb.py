@@ -64,11 +64,11 @@ class Bomb(Entity):
     def loop(self, keys: ScancodeWrapper):
         current_time = time.time()
         if current_time - self.start_time >= 3:
-            self.explode()
             
             self.generate_fragment()
             self.fragments_duration += 1
-            if self.fragments_duration >= 30:
+            if self.fragments_duration >= 40:
+                self.explode()
                 self.kill()
 
 

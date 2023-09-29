@@ -15,16 +15,18 @@ class BomberMan(Entity):
     def __init__(self, x: int, y: int, width: int = None, height: int = None, use_limit: bool = None, gravity_force: float = None, player_type = 1) -> None:
         if player_type not in PLAYER_TYPES: raise ValueError(f"player_type deve ser {PLAYER_TYPES}")
         self.player_type = player_type
+        super().__init__(x, y, width, height, use_limit, gravity_force)
+
+    def setup(self):
         self.bomb = None
         self.num_bomb = 3
         self.bomb_start_time = 0
         self.life = 2
         self.dying_tick = 0
         self.subject = PlayerSubject(self)
+        
         observer.attach(self.subject)
-        super().__init__(x, y, width, height, use_limit, gravity_force)
 
-    def setup(self):
         self.walk_horizotal = Sprite([
             'assets/player/07_NeoEarlyBomberman.png', 
             'assets/player/08_NeoEarlyBomberman.png', 
@@ -97,7 +99,7 @@ class BomberMan(Entity):
     def die(self):     
         self.dying_tick += 1
         self.current_sprite = self.dying
-        if self.dying_tick >= 40:
+        if self.dying_tick >= 60:
             self.kill()
             self.dying_tick = 0
 
@@ -127,6 +129,6 @@ class BomberMan(Entity):
         if keys[self.get_key('BOMB')] and self.num_bomb > 0:
             self.put_bomb()
         
-        if self.life == 0:
+        if self.life <= 0:
             self.die()
         self.bomb_reload()
