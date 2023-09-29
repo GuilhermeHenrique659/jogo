@@ -10,7 +10,7 @@ from typing import List
 
 
 class BaseMap(Map):
-    def __init__(self, src: str, collision_tiles: Mapping = None, n_destruction_blocks = 100) -> None:
+    def __init__(self, src: str, collision_tiles: Mapping = None, n_destruction_blocks = 50) -> None:
         self.n_destruction_blocks = n_destruction_blocks
         self.destruction_blocks: List[Entity] = []
         super().__init__(src, collision_tiles)
@@ -25,7 +25,7 @@ class BaseMap(Map):
         player1_x, player1_y = player1.get_current_tile()
         player2_x, player2_y = player2.get_current_tile()
 
-        for i in range(self.n_destruction_blocks):
+        for _ in range(self.n_destruction_blocks):
             block_x = random.randrange(tile_size, width - tile_size, tile_size)
             block_y = random.randrange(tile_size, height - tile_size, tile_size)
             if (player1_x == block_x or player2_x == block_x): continue
@@ -33,7 +33,7 @@ class BaseMap(Map):
             destruction_block = DestructionBlock(block_x, block_y, tile_size, tile_size)
             self.destruction_blocks.append(destruction_block)
 
-    def custom_collsion(self):
+    def custom_collsion(self, entity: Entity):
         for destruction_block in self.destruction_blocks:
             if destruction_block.is_alive:
-                self.collision_rect.append(destruction_block.rect)
+                entity.collision_entity([destruction_block])

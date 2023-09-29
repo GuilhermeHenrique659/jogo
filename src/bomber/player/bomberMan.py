@@ -19,7 +19,7 @@ class BomberMan(Entity):
         self.num_bomb = 3
         self.bomb_start_time = 0
         self.life = 2
-        self.dying_time = 0
+        self.dying_tick = 0
         self.subject = PlayerSubject(self)
         observer.attach(self.subject)
         super().__init__(x, y, width, height, use_limit, gravity_force)
@@ -94,10 +94,12 @@ class BomberMan(Entity):
         self.entities.append(self.bomb)
 
 
-    def die(self):        
-        self.dying_time += 1
+    def die(self):     
+        self.dying_tick += 1
         self.current_sprite = self.dying
-        self.kill()
+        if self.dying_tick >= 40:
+            self.kill()
+            self.dying_tick = 0
 
     def loop(self, keys: ScancodeWrapper):
         if (keys[self.get_key('RIGHT')]):

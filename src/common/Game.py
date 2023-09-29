@@ -33,6 +33,8 @@ class Game(ABC):
         pass
 
     def render(self):
+        pygame.font.init() 
+        pygame.mixer.init()
         self.setup()
         while self.loop:
             for event in pygame.event.get():

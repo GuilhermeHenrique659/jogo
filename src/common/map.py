@@ -41,11 +41,11 @@ class Map(ABC):
         return gids
                 
     @abstractmethod
-    def custom_collsion(self):
+    def custom_collsion(self, entity: Entity):
         pass
 
     def collision_map_with_entity(self, entity: Entity):
-        self.custom_collsion()
+        self.custom_collsion(entity)
         for rect in self.collision_rect:
             if entity.rect.colliderect(rect):
                 self.collision_math(entity, rect)

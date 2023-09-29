@@ -30,6 +30,11 @@ class Bomber(Game):
         for i in range(num_bombs):
             self.bomb_icons_player_1.append(BombIcon(32 + i * 48, 10))
 
+    def game_over(self):
+        if self.player1.is_alive and self.player2.is_alive: return
+
+        print('fim do jogo')
+        self.loop = False
             
     def render_bomb_icons(self):
         for icon in self.bomb_icons_player_1:
@@ -40,6 +45,7 @@ class Bomber(Game):
     def main(self):
         self.display.fill("purple")
         self.map.render()
+        self.map.render_destruction_blocks()
         self.set_player1_bomb_icons(self.player1.num_bomb)
         self.player1.render()
         self.player2.render()
@@ -47,9 +53,9 @@ class Bomber(Game):
         self.render_bomb_icons()
         self.player1.collision_entity([self.player2, *self.player1.entities, *self.player2.entities])
         self.player2.collision_entity([self.player1, *self.player1.entities, *self.player2.entities])
-        self.map.render_destruction_blocks()
         self.map.collision_map_with_entity(self.player1)
         self.map.collision_map_with_entity(self.player2)
+        self.game_over()
 
 WIDTH, HEIGHT = Config.display_size()
 Bomber = Bomber('Arabe simulator', WIDTH, HEIGHT, Config.tile_size(), True)
