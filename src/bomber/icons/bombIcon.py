@@ -13,7 +13,7 @@ class BombIcon(Entity):
         'assets/bomb/03_bomb.png', 
         'assets/bomb/04_bomb.png',
         'assets/bomb/05_bomb.png'
-        ], tick=1000)
+        ], tick=300)
     
     def loop(self, keys: ScancodeWrapper, *args):
         pass

@@ -12,8 +12,8 @@ class Bomber(Game):
     def setup(self):
         self.fps = 60
         self.game = GameScreen()
-        self.gameOver = GameOverScreen()
-        self.current_screen = MenuScreen()
+        self.gameOver = GameOverScreen(self.set_current_screen_game)
+        self.current_screen =  MenuScreen(self.set_current_screen_game)
 
     def game_over(self):
         if self.game.player1.is_alive and self.game.player2.is_alive: return
@@ -21,13 +21,11 @@ class Bomber(Game):
         self.game.reset()
         self.current_screen = self.gameOver
 
+    def set_current_screen_game(self):
+        self.current_screen = self.game
+
     def main(self):
         self.display.fill("purple")
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RETURN]:
-            self.current_screen = self.game
-        elif keys[pygame.K_ESCAPE]:
-            self.loop = False
         self.game_over()
         self.current_screen.render()
 
