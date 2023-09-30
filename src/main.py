@@ -18,10 +18,12 @@ class Bomber(Game):
     def game_over(self):
         if self.game.player1.is_alive and self.game.player2.is_alive: return
         
-        self.game.reset()
+        del self.game
         self.current_screen = self.gameOver
+        self.game = GameScreen()
 
     def set_current_screen_game(self):
+        del self.current_screen
         self.current_screen = self.game
 
     def main(self):

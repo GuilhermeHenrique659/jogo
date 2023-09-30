@@ -1,6 +1,7 @@
 from bomber.icons.bombIcon import BombIcon
 from bomber.maps.base_map import BaseMap
 from bomber.player.bomberMan import BomberMan
+from common.music import MusicPlayer
 from common.screen import Screen
 import threading
 

@@ -47,7 +47,6 @@ class Game(ABC):
                         print(f"Tile address: ({tile_x}, {tile_y}) \nTile coordinate: ({tile_x * self.tile_size}, {tile_y * self.tile_size})")
 
             self.main()
-
             pygame.display.flip()
             self.clock.tick(self.fps)
 

@@ -3,8 +3,6 @@ import pygame
 from pygame.key import ScancodeWrapper
 from pygame import Rect
 from pygame import Surface
-from common.Game import Game
-from common.concurrancyForEach import concurrancy_for_each
 from common.config import Config
 from common.sprite import Sprite
 from typing import Tuple
@@ -100,7 +98,7 @@ class Entity(ABC):
 
         for entity in self.entities:
             if not entity.is_alive: 
-                del entity 
+                del entity
                 continue
             if entity: entity.render()
 
