@@ -1,9 +1,8 @@
-
 from bomber.icons.bombIcon import BombIcon
 from bomber.maps.base_map import BaseMap
 from bomber.player.bomberMan import BomberMan
 from common.screen import Screen
-
+import threading
 
 class GameScreen(Screen):
     def __init__(self) -> None:
@@ -46,11 +45,21 @@ class GameScreen(Screen):
         self.map.render()
         self.map.render_destruction_blocks()
         self.set_player1_bomb_icons(self.player1.num_bomb)
-        self.player1.render()
-        self.player2.render()
+
+        player1_thread = threading.Thread(target=self.player1.render)
+        player1_thread.start()
+        player2_thread = threading.Thread(target=self.player2.render)
+        player2_thread.start()
+
         self.set_player2_bomb_icons(self.player2.num_bomb)
         self.render_bomb_icons()
-        self.player1.collision_entity([self.player2, *self.player1.entities, *self.player2.entities])
-        self.player2.collision_entity([self.player1, *self.player1.entities, *self.player2.entities])
-        self.map.collision_map_with_entity(self.player1)
-        self.map.collision_map_with_entity(self.player2)
+
+        collision_thread_player1_enities = threading.Thread(target= self.player1.collision_entity, args=([self.player2, *self.player1.entities, *self.player2.entities],))
+        collision_thread_player1_enities.start()
+        collision_thread_player2_enities = threading.Thread(target= self.player2.collision_entity, args=([self.player1, *self.player1.entities, *self.player2.entities],))
+        collision_thread_player2_enities.start()
+
+        collision_thread_map_player1 = threading.Thread(target=self.map.collision_map_with_entity, args=(self.player1,))
+        collision_thread_map_player1.start()
+        collision_thread_map_player2 = threading.Thread(target=self.map.collision_map_with_entity, args=(self.player2,))
+        collision_thread_map_player2.start()

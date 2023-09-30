@@ -2,8 +2,10 @@ from abc import ABC, abstractmethod
 import pygame
 import pytmx
 from common.Entity import Entity
+from common.concurrancyForEach import concurrancy_for_each
 from common.config import Config
 from typing import Mapping, List
+import threading
 
 class Map(ABC):
 
@@ -41,15 +43,20 @@ class Map(ABC):
         return gids
                 
     @abstractmethod
-    def custom_collsion(self, entity: Entity):
+    def custom_collision(self, entity: Entity):
         pass
 
-    def collision_map_with_entity(self, entity: Entity):
-        self.custom_collsion(entity)
-        for rect in self.collision_rect:
+    def __process_collision_rects(self, entity, rects):
+        for rect in rects:
             if entity.rect.colliderect(rect):
                 self.collision_math(entity, rect)
-                
+
+    def collision_map_with_entity(self, entity: Entity):
+        custom_collision_thread = threading.Thread(target=self.custom_collision, args=(entity,))
+        custom_collision_thread.start()
+        concurrancy_for_each(self.__process_collision_rects, self.collision_rect, entity)
+
+                    
 
     def collision_math(self, entity, rect):
         overlap_x = min(entity.rect.right, rect.right) - max(entity.rect.left, rect.left)

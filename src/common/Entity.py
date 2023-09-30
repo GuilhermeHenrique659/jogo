@@ -4,6 +4,7 @@ from pygame.key import ScancodeWrapper
 from pygame import Rect
 from pygame import Surface
 from common.Game import Game
+from common.concurrancyForEach import concurrancy_for_each
 from common.config import Config
 from common.sprite import Sprite
 from typing import Tuple

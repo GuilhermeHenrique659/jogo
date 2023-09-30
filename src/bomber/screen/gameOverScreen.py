@@ -20,7 +20,7 @@ class GameOverScreen(Screen):
         sys.exit()
 
     def render(self):
-        self.cover_screen_with_image('assets/FrY6_BPWcAgG-xp.png')
+        self.cover_screen_with_image('assets/gameover.png')
         self.init_text.render(self.display)
         self.quit_text.render(self.display)
         self.cursor.render()
