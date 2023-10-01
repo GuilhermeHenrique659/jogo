@@ -10,9 +10,9 @@ class BombFragment(Entity):
         super().__init__(x, y, width, height, use_limit, gravity_force)
 
     def setup(self):
-        self.current_sprite = Sprite(['assets/bomb/03_bomb.png',
-                                      'assets/bomb/04_bomb.png',
-                                      'assets/bomb/05_bomb.png'], 300)
+        self.current_sprite = Sprite([
+            'assets/bomb/bomb (2).png',
+        ], 300)
 
     
     def loop(self, keys: ScancodeWrapper, *args):

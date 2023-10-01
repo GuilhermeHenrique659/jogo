@@ -12,10 +12,9 @@ from common.text import Text
 class MenuScreen(Screen):
     def __init__(self, action: Callable) -> None:
         super().__init__()
-        self.init_text = Text('Iniciar jogo', 'white', 32, Point((3, 12)).convert_to_point())
-        self.quit_text = Text('Sair jogo', 'white', 32, Point((3, 13)).convert_to_point())
+        self.init_text = Text('Iniciar jogo', 'red', 32, Point((3, 12)).convert_to_point())
+        self.quit_text = Text('Sair jogo', 'red', 32, Point((3, 13)).convert_to_point())
         self.music = MusicPlayer()
-        self.music.play_music('assets/game.mp3')
         self.cursor = Cursor(Point((2, 12)).convert_to_point(), [12, 13])
         self.action = action
 
@@ -24,13 +23,12 @@ class MenuScreen(Screen):
         sys.exit()
 
     def render(self):
-        self.display.fill("purple")
+        self.cover_screen_with_image('assets/menu.png')
         self.init_text.render(self.display)
         self.quit_text.render(self.display)
         self.cursor.render()
         if self.cursor.point.compare_tile_y(12) and self.cursor.confirm:
             self.action()
-            self.music.stop_music()
             self.cursor.reset()
         if self.cursor.point.compare_tile_y(13) and self.cursor.confirm:
             self.shutdown()

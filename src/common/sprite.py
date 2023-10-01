@@ -4,6 +4,7 @@ from typing import Tuple, List
 import pygame
 
 from common.Game import Game
+from common.config import Config
 
 class Sprite:
     def __init__(self, imgs: List[str], position: Tuple[int, int] = None, tick = 200) -> None:
@@ -14,6 +15,12 @@ class Sprite:
         self.current_index = 0
         self.last_update_time = 0
         self.is_fliped = False
+
+    def scale_tile(self):
+        new_sprites_imgs = []
+        for img in self.sprites_imgs:
+            new_sprites_imgs.append(pygame.transform.scale(img, (Config.tile_size(), Config.tile_size())))
+        self.sprites_imgs = new_sprites_imgs
 
     def init(self, imgs: List[str]):
         for img in imgs:

@@ -28,43 +28,31 @@ class BomberMan(Entity):
         observer.attach(self.subject)
 
         self.walk_horizotal = Sprite([
-            'assets/player/07_NeoEarlyBomberman.png', 
-            'assets/player/08_NeoEarlyBomberman.png', 
-            'assets/player/09_NeoEarlyBomberman.png', 
-            'assets/player/10_NeoEarlyBomberman.png', 
-            'assets/player/11_NeoEarlyBomberman.png',
-            'assets/player/12_NeoEarlyBomberman.png',
-            'assets/player/13_NeoEarlyBomberman.png',
-             ])
+            'assets/player/bomber (12).png',
+            'assets/player/bomber (13).png',
+            'assets/player/bomber (14).png',
+            ])
         self.walk_up = Sprite([
-            'assets/player/00_NeoEarlyBomberman.png', 
-            'assets/player/01_NeoEarlyBomberman.png', 
-            'assets/player/02_NeoEarlyBomberman.png', 
-            'assets/player/03_NeoEarlyBomberman.png', 
-            'assets/player/04_NeoEarlyBomberman.png',
-            'assets/player/05_NeoEarlyBomberman.png',
-            'assets/player/06_NeoEarlyBomberman.png',
+            'assets/player/bomber (3).png',
+            'assets/player/bomber (4).png',
+            'assets/player/bomber (5).png',
              ])
         
         self.dying = Sprite([
-            'assets/player/dead1 (1).png',
-            'assets/player/dead1 (2).png', 
-            'assets/player/dead1 (3).png', 
-            'assets/player/dead1 (4).png', 
-            'assets/player/dead1 (5).png', 
-            'assets/player/dead1 (6).png',
+            'assets/player/bomber (6).png',
+            'assets/player/bomber (7).png',
+            'assets/player/bomber (8).png',
+            'assets/player/bomber (9).png',
+            'assets/player/bomber (10).png',
+            'assets/player/bomber (11).png',
         ])
         
         self.walk_down = Sprite([
-            'assets/player/14_NeoEarlyBomberman.png', 
-            'assets/player/15_NeoEarlyBomberman.png',
-            'assets/player/16_NeoEarlyBomberman.png',
-            'assets/player/17_NeoEarlyBomberman.png',
-            'assets/player/18_NeoEarlyBomberman.png',
-            'assets/player/19_NeoEarlyBomberman.png',
-            'assets/player/20_NeoEarlyBomberman.png',
+            'assets/player/bomber (15).png',
+            'assets/player/bomber (1).png',
+            'assets/player/bomber (2).png',
         ])
-        self.idle = Sprite(['assets/player/18_NeoEarlyBomberman.png'])
+        self.idle = Sprite(['assets/player/bomber (15).png'])
         self.current_sprite = self.dying
 
     def get_key(self, command: str):

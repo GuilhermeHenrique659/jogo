@@ -16,14 +16,22 @@ class Cursor(Entity):
         super().__init__(x, y)
 
     def setup(self):
-        self.current_sprite = Sprite(['assets/bomb/00_bomb.png','assets/bomb/01_bomb.png','assets/bomb/02_bomb.png'])
-        self.confirm_sprite = Sprite(['assets/bomb/03_bomb.png', 'assets/bomb/04_bomb.png', 'assets/bomb/05_bomb.png'])
+        self.current_sprite = Sprite([
+            'assets/bomb/bomb (5).png', 
+            'assets/bomb/bomb (4).png', 
+            'assets/bomb/bomb (3).png', 
+        ])
+        self.confirm_sprite = Sprite(['assets/bomb/bomb (2).png'])
         self.confirm_animation_time = 0
         self.confirm_animation_start = False
         self.confirm = False
 
     def reset(self):
-        self.current_sprite = Sprite(['assets/bomb/00_bomb.png','assets/bomb/01_bomb.png','assets/bomb/02_bomb.png'])
+        self.current_sprite = Sprite([
+            'assets/bomb/bomb (5).png', 
+            'assets/bomb/bomb (4).png', 
+            'assets/bomb/bomb (3).png', 
+        ])
         self.confirm_animation_time = 0
         self.confirm_animation_start = False
         self.is_alive = True
