@@ -9,6 +9,7 @@ class Bomber(Game):
         super().__init__(name, width, height, tile_size, debug_mode)
     
     def setup(self):
+        self.fps = 60
         self.game = GameScreen()
         self.gameOver = GameOverScreen(self.set_current_screen_game)
         self.current_screen =  MenuScreen(self.set_current_screen_game)
