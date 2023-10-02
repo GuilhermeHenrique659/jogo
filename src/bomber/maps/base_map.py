@@ -16,8 +16,8 @@ class BaseMap(Map):
         self.destruction_blocks: List[Entity] = []
         super().__init__(src, collision_tiles)
 
-    def render_destruction_blocks(self):
-        for entity in self.destruction_blocks:
+    def render_destruction_blocks(self, destruction_blocks):
+        for entity in destruction_blocks:
             entity.render()
 
     def __generate_cordinate(self):

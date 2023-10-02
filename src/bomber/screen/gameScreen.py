@@ -1,6 +1,7 @@
 from bomber.icons.bombIcon import BombIcon
 from bomber.maps.base_map import BaseMap
 from bomber.player.bomberMan import BomberMan
+from common.concurrancyForEach import concurrancy_for_each
 from common.music import MusicPlayer
 from common.screen import Screen
 import threading
@@ -14,6 +15,7 @@ class GameScreen(Screen):
         self.bomb_icons_player_2 = []
         self.map = BaseMap('assets/map.tmx', { 'wall_l': 2684354561, 'wall_t': 3221225473, 'wall_b': 1, 'wall_r': 1610612737, })
         self.map.generate_destruction_blocks(self.player1, self.player2)
+        self.map.setup_map()
 
     def reset(self):
         self.player1.life = 2
@@ -43,8 +45,8 @@ class GameScreen(Screen):
             icon.render()
 
     def render(self):
-        self.map.render()
-        self.map.render_destruction_blocks()
+        concurrancy_for_each(self.map.render, self.map.map_imgs)
+        concurrancy_for_each(self.map.render_destruction_blocks, self.map.destruction_blocks)
         self.set_player1_bomb_icons(self.player1.num_bomb)
 
         player1_thread = threading.Thread(target=self.player1.render)

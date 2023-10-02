@@ -4,7 +4,7 @@ import pytmx
 from common.Entity import Entity
 from common.concurrancyForEach import concurrancy_for_each
 from common.config import Config
-from typing import Mapping, List
+from typing import Mapping, List, Tuple
 import threading
 
 class Map(ABC):
@@ -16,6 +16,7 @@ class Map(ABC):
         self.collision_tiles = collision_tiles
         self.collision_gid = []
         self.collision_rect = []
+        self.map_imgs: List[Tuple[int, int, pygame.Surface]] = []
         self.setup_collision_tiles()
     
     def setup_collision_tiles(self):
@@ -24,15 +25,19 @@ class Map(ABC):
             gid = self.get_gid_by_tile(tile)
             self.collision_gid.extend(gid)
 
-    def render(self):
+    def setup_map(self):
         for layer in self.map.visible_layers:
             for x, y, gid, in layer:
                 image = self.map.get_tile_image_by_gid(gid)
                 rect = pygame.Rect(x * Config.tile_size(), y * Config.tile_size(), Config.tile_size(), Config.tile_size())
                 if image:
-                    self.display.blit(image, (x * Config.tile_size(), y * Config.tile_size()))
+                    self.map_imgs.append((x, y, image))
                 if gid in self.collision_gid:
                     self.collision_rect.append(rect)
+
+    def render(self, map_imgs):
+        for x, y, image in map_imgs:
+            self.display.blit(image, (x * Config.tile_size(), y * Config.tile_size()))
         
 
     def get_gid_by_tile(self, tile: int) -> List[int]:
