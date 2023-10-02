@@ -2,7 +2,7 @@ from common.Entity import Entity
 from common.concurrancyForEach import concurrancy_for_each
 
 
-class Observer:
+class Subject:
     def __init__(self) -> None:
         self.subjects = []
 
@@ -17,4 +17,4 @@ class Observer:
     def notify(self, bomb: Entity):
         concurrancy_for_each(self.__process_subjects, self.subjects, bomb)
 
-observer = Observer()
+subject = Subject()

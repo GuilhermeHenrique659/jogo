@@ -3,11 +3,14 @@ import pygame
 from pygame.key import ScancodeWrapper
 from bomber.bomb.Bomb import Bomb
 from bomber.enums.playersKeys import PlayerOneKey, PlayerTwoKey
-from bomber.observer.bomb.observer import observer
-from bomber.observer.bomb.playerSubject import PlayerSubject
+from bomber.icons.bombIcon import BombIcon
+from bomber.icons.lifeIcon import LifeIcon
+from bomber.observer.bomb.subject import subject
+from bomber.observer.bomb.playerObserver import PlayerObserver
 from common.Entity import Entity
+from common.config import Config
 from common.sprite import Sprite
-
+from common.point import Point
 
 PLAYER_TYPES = [1, 2]
 
@@ -23,9 +26,9 @@ class BomberMan(Entity):
         self.bomb_start_time = 0
         self.life = 2
         self.dying_tick = 0
-        self.subject = PlayerSubject(self)
+        self.subject = PlayerObserver(self)
         
-        observer.attach(self.subject)
+        subject.attach(self.subject)
 
         self.walk_horizotal = Sprite([
             'assets/player/bomber (12).png',
@@ -54,6 +57,14 @@ class BomberMan(Entity):
         ])
         self.idle = Sprite(['assets/player/bomber (15).png'])
         self.current_sprite = self.dying
+
+    def life_icons(self):
+        x, y = Point((1 if self.player_type == 1 else 22, 15)).convert_to_point().get_points()
+        return [LifeIcon(x + i * Config.tile_size(), y) for i in range(self.life)]
+
+    def bomb_icons(self):
+        x, y = Point((1 if self.player_type == 1 else 22, 0)).convert_to_point().get_points()
+        return [BombIcon(x + i * Config.tile_size(), y) for i in range(self.num_bomb)]
 
     def get_key(self, command: str):
         if self.player_type == 1:

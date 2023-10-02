@@ -2,7 +2,7 @@ from bomber.bomb.Bomb import Bomb
 from common.Entity import Entity
 from common.config import Config
 
-class PlayerSubject:
+class PlayerObserver:
     def __init__(self, player: Entity) -> None:
         self.player = player
 

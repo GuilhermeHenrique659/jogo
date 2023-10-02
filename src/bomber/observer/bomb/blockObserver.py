@@ -3,7 +3,7 @@ from bomber.bomb.Bomb import Bomb
 from common.Entity import Entity
 from common.config import Config
 
-class BlockSubject:
+class BlockObserver:
     def __init__(self, block: Entity) -> None:
         self.block = block
 

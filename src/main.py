@@ -1,4 +1,3 @@
-import pygame
 from bomber.screen.gameOverScreen import GameOverScreen
 from bomber.screen.gameScreen import GameScreen
 from bomber.screen.menuScreen import MenuScreen
@@ -10,7 +9,6 @@ class Bomber(Game):
         super().__init__(name, width, height, tile_size, debug_mode)
     
     def setup(self):
-        self.fps = 60
         self.game = GameScreen()
         self.gameOver = GameOverScreen(self.set_current_screen_game)
         self.current_screen =  MenuScreen(self.set_current_screen_game)
@@ -33,5 +31,5 @@ class Bomber(Game):
 
 
 WIDTH, HEIGHT = Config.display_size()
-Bomber = Bomber('Arabe simulator', WIDTH, HEIGHT, Config.tile_size(), True)
+Bomber = Bomber('Bomber man', WIDTH, HEIGHT, Config.tile_size(), True)
 Bomber.render()

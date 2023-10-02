@@ -3,6 +3,8 @@ from abc import ABC, abstractmethod
 import pygame
 from pygame import Surface
 from pygame.time import Clock
+from common.point import Point
+from common.text import Text
 
 class Game(ABC):
     __name: str
@@ -11,7 +13,7 @@ class Game(ABC):
     display: Surface
     clock: Clock
     loop = True
-    fps = 60
+    fps = 0
 
     def __init__(self, name: str, width: int, height: int, tile_size = None, debug_mode = False) -> None:
         self.__name = name
@@ -33,7 +35,6 @@ class Game(ABC):
         pass
 
     def render(self):
-
         self.setup()
         while self.loop:
             for event in pygame.event.get():
@@ -47,6 +48,9 @@ class Game(ABC):
                         print(f"Tile address: ({tile_x}, {tile_y}) \nTile coordinate: ({tile_x * self.tile_size}, {tile_y * self.tile_size})")
 
             self.main()
+            if self.debug_mode:
+                Text(str(int(self.clock.get_fps())), 'red', 16, Point((0, 0)).convert_to_point()). \
+                    render(self.display)
             pygame.display.flip()
             self.clock.tick(self.fps)
 

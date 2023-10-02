@@ -2,7 +2,7 @@ import time
 from typing import Tuple
 from pygame.key import ScancodeWrapper
 from bomber.bomb.bombFragment import BombFragment
-from bomber.observer.bomb.observer import observer
+from bomber.observer.bomb.subject import subject
 from common.Entity import Entity
 from common.config import Config
 from common.sprite import Sprite
@@ -26,7 +26,7 @@ class Bomb(Entity):
 
         
     def explode(self):
-        observer.notify(self)
+        subject.notify(self)
 
     def get_point(self, direction: str) -> Tuple[int, int]:
         tile_size = Config.tile_size()
