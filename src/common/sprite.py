@@ -18,13 +18,17 @@ class Sprite:
 
     def scale_tile(self):
         new_sprites_imgs = []
+        new_rects = []
         for img in self.sprites_imgs:
-            new_sprites_imgs.append(pygame.transform.scale(img, (Config.tile_size(), Config.tile_size())))
+            new_img = pygame.transform.scale(img, (Config.tile_size(), Config.tile_size()))
+            new_rects.append(new_img.get_rect())
+            new_sprites_imgs.append(new_img)
+        self.sprites_rect = new_rects
         self.sprites_imgs = new_sprites_imgs
 
     def init(self, imgs: List[str]):
         for img in imgs:
-            sprite_img = pygame.image.load(img)
+            sprite_img = pygame.image.load(img).convert_alpha()
             sprite_rect = sprite_img.get_rect()
             self.sprites_rect.append(sprite_rect)
             self.sprites_imgs.append(sprite_img)
