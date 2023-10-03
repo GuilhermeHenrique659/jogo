@@ -5,7 +5,7 @@ from common.text import Text
 
 class HistoryScreen(Screen):
     def __init__(self, action) -> None:
-        super().__init__()
+        super().__init__('assets/historyBg.png')
         self.history_text_1 = Text('Durante a união sovietica, familares acusada de atos anti sovientico', 'black', 32, Point((2, 5)).convert_to_point())    
         self.history_text_2 = Text('eram jogadas no gulag, onde seus primogenito lutam com bombas,', 'black', 32, Point((2, 6)).convert_to_point())
         self.history_text_3 = Text('para que decida quem irá ter acesso a comida.', 'black', 32, Point((2, 7)).convert_to_point())
@@ -15,7 +15,7 @@ class HistoryScreen(Screen):
 
 
     def render(self):
-        self.cover_screen_with_image('assets/historyBg.png')
+        self.cover_screen_with_image()
         self.history_text_1.render(self.display)
         self.history_text_2.render(self.display)
         self.history_text_3.render(self.display)

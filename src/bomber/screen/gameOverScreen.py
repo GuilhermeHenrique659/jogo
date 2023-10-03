@@ -9,7 +9,7 @@ from common.text import Text
 
 class GameOverScreen(Screen):
     def __init__(self, action: Callable) -> None:
-        super().__init__()
+        super().__init__('assets/gameover.png')
         self.init_text = Text('Iniciar jogo', 'white', 32, Point((3, 12)).convert_to_point())
         self.quit_text = Text('Sair jogo', 'white', 32, Point((3, 13)).convert_to_point())
         self.cursor = Cursor(Point((2, 12)).convert_to_point(), [12, 13])
@@ -20,7 +20,7 @@ class GameOverScreen(Screen):
         sys.exit()
 
     def render(self):
-        self.cover_screen_with_image('assets/gameover.png')
+        self.cover_screen_with_image()
         self.init_text.render(self.display)
         self.quit_text.render(self.display)
         self.cursor.render()
