@@ -14,7 +14,6 @@ class MenuScreen(Screen):
         super().__init__()
         self.init_text = Text('Iniciar jogo', 'red', 32, Point((3, 12)).convert_to_point())
         self.quit_text = Text('Sair jogo', 'red', 32, Point((3, 13)).convert_to_point())
-        self.music = MusicPlayer()
         self.cursor = Cursor(Point((2, 12)).convert_to_point(), [12, 13])
         self.action = action
 

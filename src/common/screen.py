@@ -13,7 +13,7 @@ class Screen(ABC):
 
     def cover_screen_with_image(self, src: str):
         w, h = Config.display_size()
-        image = pygame.image.load(src)
+        image = pygame.image.load(src).convert()
         image = pygame.transform.scale(image, (w, h))
         self.display.blit(image, (0, 0))
 
